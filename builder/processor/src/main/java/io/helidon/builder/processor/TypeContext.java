@@ -343,9 +343,6 @@ record TypeContext(
                                       if (ignoreInterfaces.contains(it.enclosingType().get())) {
                                           // collect all methods from super prototypes, so we know how to handle overrides
                                           superPrototypeMethods.add(MethodSignature.create(it));
-                                      }
-                                      if (ignoreInterfaces.contains(it.enclosingType().get())) {
-                                          // if this method is defined on an ignored interface, filter it out
                                           return false;
                                       }
                                       return true;
@@ -375,10 +372,6 @@ record TypeContext(
 
                                       return true;
                                   })
-                                  .filter(it -> !it.findAnnotation(CONFIGURED_OPTION_TYPE)
-                                          .flatMap(annot -> annot.getValue("notConfigured"))
-                                          .map(Boolean::parseBoolean)
-                                          .orElse(false))
                                   // filter out Supplier.get()
                                   .filter(it -> !("get".equals(it.elementName()) && "T".equals(it.typeName().className())))
                                   .map(it -> PrototypeProperty.create(processingContext,

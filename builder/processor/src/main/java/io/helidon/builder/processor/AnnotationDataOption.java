@@ -211,7 +211,7 @@ record AnnotationDataOption(Javadoc javadoc,
                 }
             }
             if (configured == null) {
-                configured = !annotation.getValue("notConfigured").map(Boolean::parseBoolean).orElse(false);
+                configured = true;
                 configKey = annotation.stringValue("key")
                         .filter(Predicate.not(String::isBlank))
                         .orElseGet(() -> toConfigKey(handler.name()));

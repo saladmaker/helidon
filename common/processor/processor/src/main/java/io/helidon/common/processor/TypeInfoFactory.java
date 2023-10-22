@@ -245,7 +245,6 @@ public final class TypeInfoFactory {
                 .stream()
                 .map(TypeName::genericTypeName)
                 .filter(not(TypeInfoFactory::isBuiltInJavaType))
-                .filter(not(TypeName::generic))
                 .forEach(allInterestingTypeNames::add);
 
         Elements elementUtils = processingEnv.getElementUtils();
@@ -291,13 +290,11 @@ public final class TypeInfoFactory {
                 resolved.keySet().stream()
                         .map(TypeName::genericTypeName)
                         .filter(t -> !isBuiltInJavaType(t))
-                        .filter(t -> !t.generic())
                         .forEach(allInterestingTypeNames::add);
                 it.parameterArguments().stream()
                         .map(TypedElementInfo::typeName)
                         .map(TypeName::genericTypeName)
                         .filter(t -> !isBuiltInJavaType(t))
-                        .filter(t -> !t.generic())
                         .forEach(allInterestingTypeNames::add);
             });
 
